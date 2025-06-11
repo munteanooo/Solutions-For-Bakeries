@@ -1,0 +1,158 @@
+﻿@{
+     ViewData["Title"] = "Contact";
+}
+
+<div class="bg-gray-50 min-h-screen">
+     <!-- Header -->
+     <section class="bg-bakery-cream py-16">
+          <div class="max-w-7xl mx-auto px-4 text-center">
+               <h1 class="text-4xl md:text-5xl font-bold text-bakery-brown mb-4">Contactează-ne</h1>
+               <p class="text-xl text-gray-700 max-w-3xl mx-auto">
+                    Suntem aici să te ajutăm cu orice întrebare sau să discutăm despre nevoile tale de logistică
+               </p>
+          </div>
+     </section>
+
+     <div class="max-w-7xl mx-auto px-4 py-16">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+               <!-- Contact Form -->
+               <div class="bg-white rounded-xl shadow-lg p-8">
+                    <h2 class="text-2xl font-bold text-bakery-brown mb-6">Trimite-ne un mesaj</h2>
+                    <form class="space-y-6">
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                              <div>
+                                   <label class="block text-sm font-medium text-gray-700 mb-2">Nume *</label>
+                                   <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bakery-gold focus:border-transparent" required>
+                              </div>
+                              <div>
+                                   <label class="block text-sm font-medium text-gray-700 mb-2">Prenume *</label>
+                                   <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bakery-gold focus:border-transparent" required>
+                              </div>
+                         </div>
+
+                         <div>
+                              <label class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                              <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bakery-gold focus:border-transparent" required>
+                         </div>
+
+                         <div>
+                              <label class="block text-sm font-medium text-gray-700 mb-2">Telefon</label>
+                              <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bakery-gold focus:border-transparent">
+                         </div>
+
+                         <div>
+                              <label class="block text-sm font-medium text-gray-700 mb-2">Compania</label>
+                              <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bakery-gold focus:border-transparent">
+                         </div>
+
+                         <div>
+                              <label class="block text-sm font-medium text-gray-700 mb-2">Subiect *</label>
+                              <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bakery-gold focus:border-transparent" required>
+                                   <option value="">Selectează subiectul</option>
+                                   <option value="general">Întrebare generală</option>
+                                   <option value="logistics">Soluții de logistică</option>
+                                   <option value="partnership">Parteneriat</option>
+                                   <option value="support">Suport tehnic</option>
+                                   <option value="other">Altceva</option>
+                              </select>
+                         </div>
+
+                         <div>
+                              <label class="block text-sm font-medium text-gray-700 mb-2">Mesaj *</label>
+                              <textarea rows="6" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bakery-gold focus:border-transparent" placeholder="Descrie-ne nevoile tale sau întrebarea ta..." required></textarea>
+                         </div>
+
+                         <div class="flex items-center">
+                              <input type="checkbox" id="privacy" class="h-4 w-4 text-bakery-gold focus:ring-bakery-gold border-gray-300 rounded">
+                              <label for="privacy" class="ml-2 block text-sm text-gray-700">
+                                   Sunt de acord cu <a href="#" class="text-bakery-gold hover:underline">politica de confidențialitate</a>
+                              </label>
+                         </div>
+
+                         <button type="submit" class="w-full bg-bakery-gold text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-yellow-600 transition duration-300">
+                              <i class="fas fa-paper-plane mr-2"></i>Trimite Mesajul
+                         </button>
+                    </form>
+               </div>
+
+               <!-- Contact Information -->
+               <div class="space-y-8">
+                    <!-- Contact Details -->
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                         <h2 class="text-2xl font-bold text-bakery-brown mb-6">Informații de Contact</h2>
+                         <div class="space-y-6">
+                              <div class="flex items-start space-x-4">
+                                   <div class="bg-bakery-gold text-white p-3 rounded-full">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                   </div>
+                                   <div>
+                                        <h3 class="font-semibold text-bakery-brown">Adresa</h3>
+                                        <p class="text-gray-600">Strada Panificației nr. 123<br>Sector 1, București 010101<br>România</p>
+                                   </div>
+                              </div>
+
+                              <div class="flex items-start space-x-4">
+                                   <div class="bg-bakery-gold text-white p-3 rounded-full">
+                                        <i class="fas fa-phone"></i>
+                                   </div>
+                                   <div>
+                                        <h3 class="font-semibold text-bakery-brown">Telefon</h3>
+                                        <p class="text-gray-600">+40 123 456 789<br>+40 123 456 790</p>
+                                   </div>
+                              </div>
+
+                              <div class="flex items-start space-x-4">
+                                   <div class="bg-bakery-gold text-white p-3 rounded-full">
+                                        <i class="fas fa-envelope"></i>
+                                   </div>
+                                   <div>
+                                        <h3 class="font-semibold text-bakery-brown">Email</h3>
+                                        <p class="text-gray-600">info@logisticsbakery.ro<br>support@logisticsbakery.ro</p>
+                                   </div>
+                              </div>
+
+                              <div class="flex items-start space-x-4">
+                                   <div class="bg-bakery-gold text-white p-3 rounded-full">
+                                        <i class="fas fa-clock"></i>
+                                   </div>
+                                   <div>
+                                        <h3 class="font-semibold text-bakery-brown">Program</h3>
+                                        <p class="text-gray-600">Luni - Vineri: 08:00 - 18:00<br>Sâmbătă: 09:00 - 14:00<br>Duminică: Închis</p>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+
+                    <!-- Map -->
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                         <h2 class="text-2xl font-bold text-bakery-brown mb-6">Locația Noastră</h2>
+                         <div class="bg-gray-200 h-64 rounded-lg flex items-center justify-center">
+                              <div class="text-center text-gray-500">
+                                   <i class="fas fa-map text-4xl mb-4"></i>
+                                   <p>Hartă interactivă<br>Google Maps</p>
+                              </div>
+                         </div>
+                    </div>
+
+                    <!-- Social Media -->
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                         <h2 class="text-2xl font-bold text-bakery-brown mb-6">Urmărește-ne</h2>
+                         <div class="flex space-x-4">
+                              <a href="#" class="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition">
+                                   <i class="fab fa-facebook-f"></i>
+                              </a>
+                              <a href="#" class="bg-pink-600 text-white p-3 rounded-full hover:bg-pink-700 transition">
+                                   <i class="fab fa-instagram"></i>
+                              </a>
+                              <a href="#" class="bg-blue-500 text-white p-3 rounded-full hover:bg-blue-600 transition">
+                                   <i class="fab fa-linkedin-in"></i>
+                              </a>
+                              <a href="#" class="bg-green-600 text-white p-3 rounded-full hover:bg-green-700 transition">
+                                   <i class="fab fa-whatsapp"></i>
+                              </a>
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </div>
+</div>
