@@ -3,40 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.UI;
 
 namespace eUseControl.Web.Controllers
 {
     public class HomeController : Controller
     {
-
-          public ActionResult Index()
+        // GET: Home
+        public ActionResult Index()
         {
             return View();
         }
-          public ActionResult Products()
-          {
-               return View();
-          }
-          public ActionResult Solutions()
-          {
-               return View();
-          }
-          public ActionResult About()
-          {
-               return View();
-          }
-          public ActionResult Contact()
-          {
-               return View();
-          }
-          public ActionResult Cart()
-          {
-               return View();
-          }
-          public ActionResult Help()
-          {
-               return View();
-          }
-     }
+    }
 }

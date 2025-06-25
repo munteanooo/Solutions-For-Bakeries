@@ -1,87 +1,40 @@
 ﻿<!DOCTYPE html>
-<html lang="ro">
+<html>
 <head>
-     <meta charset="utf-8" />
-     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-     <title>@ViewData["Title"] - Logistics of a Bakery</title>
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
-<body class="bg-light">
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                </ul>
+            </div>
+        </div>
+    </div>
 
-     <!-- Navbar -->
-     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow sticky-top">
-          <div class="container">
-               <a class="navbar-brand d-flex align-items-center" href="@Url.Action("Index", "Home")">
-                    <i class="fas fa-bread-slice text-warning mr-2"></i>
-                    <strong class="text-dark">Logistics of a Bakery</strong>
-               </a>
-               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-               </button>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
 
-               <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ml-auto">
-                         <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Home")">Acasă</a></li>
-                         <li class="nav-item"><a class="nav-link" href="@Url.Action("Products", "Home")">Produse</a></li>
-                         <li class="nav-item"><a class="nav-link" href="@Url.Action("Solutions", "Home")">Soluții</a></li>
-                         <li class="nav-item"><a class="nav-link" href="@Url.Action("About", "Home")">Despre Noi</a></li>
-                         <li class="nav-item"><a class="nav-link" href="@Url.Action("Contact", "Home")">Contact</a></li>
-                         <li class="nav-item"><a class="nav-link" href="@Url.Action("Help", "Home")">Ajutor</a></li>
-                         <li class="nav-item position-relative">
-                              <a class="nav-link" href="@Url.Action("Cart", "Home")">
-                                   <i class="fas fa-shopping-cart"></i>
-                                   <span class="badge badge-danger position-absolute" style="top: -5px; right: -10px;">3</span>
-                              </a>
-                         </li>
-                    </ul>
-               </div>
-          </div>
-     </nav>
-
-     <!-- Main content -->
-     <main class="container mt-4">
-          @RenderBody()
-     </main>
-
-     <!-- Footer -->
-     <footer class="bg-dark text-white mt-5 py-4">
-          <div class="container">
-               <div class="row text-center text-md-left">
-                    <div class="col-md-3 mb-4">
-                         <h5><i class="fas fa-bread-slice text-warning mr-2"></i>Logistics of a Bakery</h5>
-                         <p>Soluții complete de logistică pentru brutării moderne.</p>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                         <h6 class="text-uppercase">Servicii</h6>
-                         <ul class="list-unstyled">
-                              <li><a href="#" class="text-white-50">Managementul Stocurilor</a></li>
-                              <li><a href="#" class="text-white-50">Distribuție</a></li>
-                              <li><a href="#" class="text-white-50">Consultanță</a></li>
-                              <li><a href="#" class="text-white-50">Automatizare</a></li>
-                         </ul>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                         <h6 class="text-uppercase">Contact</h6>
-                         <p><i class="fas fa-phone mr-2"></i>+40 123 456 789</p>
-                         <p><i class="fas fa-envelope mr-2"></i>info@logisticsbakery.ro</p>
-                         <p><i class="fas fa-map-marker-alt mr-2"></i>București, România</p>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                         <h6 class="text-uppercase">Urmărește-ne</h6>
-                         <a href="#" class="text-white-50 mr-3"><i class="fab fa-facebook"></i></a>
-                         <a href="#" class="text-white-50 mr-3"><i class="fab fa-instagram"></i></a>
-                         <a href="#" class="text-white-50"><i class="fab fa-linkedin"></i></a>
-                    </div>
-               </div>
-               <div class="text-center border-top pt-3 mt-3 text-white-50">
-                    &copy; 2024 Logistics of a Bakery. Toate drepturile rezervate.
-               </div>
-          </div>
-     </footer>
-
-     <!-- Scripts -->
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
 </body>
 </html>
