@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+     <meta charset="utf-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>@ViewBag.Title - Bakery Solutions</title>
+
+     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+     <!-- Bootstrap Icons CSS from CDN -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+     <div class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container">
+               <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                         <span class="icon-bar"></span>
+                         <span class="icon-bar"></span>
+                         <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Bakery Solutions", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+               </div>
+               <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                         <li>@Html.ActionLink("Acasă", "Index", "Home")</li>
+                         <li>@Html.ActionLink("Despre", "About", "Home")</li>
+                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                    @* Am eliminat @Html.Partial("_LoginPartial") pentru a preveni erorile dacă nu există acest fișier.
+                         Poți să-l adaugi înapoi odată ce ai creat _LoginPartial.cshtml și știi că funcționează. *@
+               </div>
+          </div>
+     </div>
+
+     <div class="container body-content">
+          @RenderBody()
+          <hr />
+          <footer>
+               <p>&copy; @DateTime.Now.Year - Bakery Solutions</p>
+          </footer>
+     </div>
+
+     <!-- jQuery from CDN (should be loaded first) -->
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+     <!-- Bootstrap JS (should be loaded after jQuery) -->
+     <script src="~/Scripts/bootstrap.min.js"></script>
+
+     <!-- Placeholder for page-specific scripts -->
+     @RenderSection("scripts", required: false)
+</body>
+</html>

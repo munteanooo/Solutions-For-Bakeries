@@ -1,0 +1,59 @@
+﻿@{
+     ViewBag.Title = "Register";
+}
+
+<div class="container mt-5">
+     <div class="row justify-content-center">
+          <div class="col-md-6 col-lg-5">
+               <div class="card shadow-lg p-4">
+                    <div class="card-body">
+                         <h2 class="card-title text-center mb-4">Înregistrare Cont Nou</h2>
+
+                         <!-- Centrarea conținutului formularului în card -->
+                         <div class="row justify-content-center">
+                              <div class="col-12 col-sm-10 col-md-10">
+                                   @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+                                   {
+                                        @* Câmp pentru Nume Utilizator *@
+                                        <div class="form-group mb-3">
+                                             <label for="username" class="form-label">Nume Utilizator</label>
+                                             <input type="text" class="form-control" id="username" name="username" placeholder="Introduceți numele de utilizator" required />
+                                        </div>
+
+                                        @* Câmp pentru Email *@
+                                        <div class="form-group mb-3">
+                                             <label for="email" class="form-label">Email</label>
+                                             <input type="email" class="form-control" id="email" name="email" placeholder="Introduceți adresa de email" required />
+                                        </div>
+
+                                        @* Câmp pentru Parolă *@
+                                        <div class="form-group mb-4">
+                                             <label for="password" class="form-label">Parolă</label>
+                                             <input type="password" class="form-control" id="password" name="password" placeholder="Introduceți parola" required />
+                                        </div>
+
+                                        @* Buton de Înregistrare *@
+                                        <div class="d-grid gap-2">
+                                             <button type="submit" class="btn btn-primary btn-lg">Înregistrare</button>
+                                        </div>
+                                   }
+                              </div>
+                         </div>
+
+                         @* Mesaj de Eroare (dacă există) *@
+                         @if (!string.IsNullOrEmpty(ViewBag.Error))
+                         {
+                              <div class="alert alert-danger text-center mt-3" role="alert">
+                                   @ViewBag.Error
+                              </div>
+                         }
+
+                         @* Link către pagina de login (opțional, dar util) *@
+                         <div class="text-center mt-4">
+                              <p>Ai deja cont? <a href="/Account/Login" class="text-decoration-none">Autentifică-te aici!</a></p>
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </div>
+</div>

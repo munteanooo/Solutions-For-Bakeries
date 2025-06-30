@@ -1,0 +1,431 @@
+﻿@model List<eUseControl.Domain.Entities.CartItem>
+
+@{
+     ViewBag.Title = "Coșul tău de Cumpărături";
+}
+
+<div class="container mt-4">
+     <h2 class="mb-4 text-center">Coșul tău de Cumpărături</h2>
+
+     @if (!Model.Any())
+     {
+          <div class="alert alert-info text-center py-4" role="alert">
+               <h4 class="alert-heading">Coșul tău este gol!</h4>
+               <p class="lead">Se pare că nu ai adăugat încă niciun produs în coș.</p>
+               <hr>
+               <p class="mb-0">Începe cumpărăturile și adaugă produsele preferate acum.</p>
+               <a href="/Products/Index" class="btn btn-primary mt-3">Vezi Produse</a>
+          </div>
+     }
+     else
+     {
+          <div class="card shadow-lg mb-4">
+               <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Produse în Coș</h4>
+               </div>
+               <div class="card-body p-0">
+                    <div class="table-responsive">
+                         <table class="table table-striped table-hover mb-0" id="cart-table">
+                              <thead class="table-dark">
+                                   <tr>
+                                        <th scope="col" class="text-start">Produs</th>
+                                        <th scope="col" class="text-end">Preț Unitar</th>
+                                        <th scope="col" class="text-center" style="width: 180px;">Cantitate</th>
+                                        <th scope="col" class="text-end">Total Produs</th>
+                                        <th scope="col" class="text-center">Acțiuni</th>
+                                   </tr>
+                              </thead>
+                              <tbody>
+                                   @{
+                                        decimal grandTotal = 0;
+                                   }
+                                   @foreach (var item in Model)
+                                   {
+                                        if (item.Product != null)
+                                        {
+                                             decimal itemTotal = item.Product.Price * item.Quantity;
+                                             grandTotal += itemTotal;
+
+                                             <tr data-product-id="@item.Product.Id">
+                                                  <td class="align-middle text-start">
+                                                       <strong>@item.Product.Name</strong><br />
+                                                       @if (!string.IsNullOrEmpty(item.Product.Description))
+                                                       {
+                                                            <small class="text-muted">@item.Product.Description</small>
+                                                       }
+                                                  </td>
+                                                  <td class="align-middle text-end product-price" data-price="@item.Product.Price">@item.Product.Price.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("ro-RO"))</td>
+                                                  <td class="align-middle text-center">
+                                                       <div class="input-group input-group-sm quantity-controls">
+                                                            <button class="btn btn-outline-danger btn-sm quantity-minus" type="button" data-product-id="@item.Product.Id" @(item.Quantity <= 1 ? "disabled" : "")>
+                                                                 <i class="bi bi-dash"></i>
+                                                            </button>
+                                                            <input type="number" class="form-control form-control-sm text-center quantity-input"
+                                                                   value="@item.Quantity"
+                                                                   min="1"
+                                                                   max="99"
+                                                                   data-product-id="@item.Product.Id"
+                                                                   readonly />
+                                                            <button class="btn btn-outline-success btn-sm quantity-plus" type="button" data-product-id="@item.Product.Id">
+                                                                 <i class="bi bi-plus"></i>
+                                                            </button>
+                                                       </div>
+                                                  </td>
+                                                  <td class="align-middle text-end item-total-price">@itemTotal.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("ro-RO"))</td>
+                                                  <td class="align-middle text-center">
+                                                       <button class="btn btn-sm btn-outline-danger remove-item" type="button" data-product-id="@item.Product.Id" title="Șterge Produsul">
+                                                            <i class="bi bi-trash"></i>
+                                                       </button>
+                                                  </td>
+                                             </tr>
+
+                                        }
+                                   }
+                              </tbody>
+                              <tfoot class="table-light">
+                                   <tr>
+                                        <th colspan="3" class="text-end py-3 fs-5">Total General Coș:</th>
+                                        <th colspan="2" id="grand-total-display" class="text-start py-3 fs-5 text-success">@grandTotal.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("ro-RO"))</th>
+                                   </tr>
+                              </tfoot>
+                         </table>
+                    </div>
+               </div>
+          </div>
+
+          <div class="d-flex justify-content-end mt-4">
+               <form method="post" action="/Cart/PlaceOrder" id="place-order-form">
+                    <button type="submit" class="btn btn-success btn-lg shadow">
+                         <i class="bi bi-bag-check-fill me-2"></i> Plasează Comanda
+                    </button>
+               </form>
+          </div>
+     }
+</div>
+
+<style>
+     .quantity-controls {
+          max-width: 140px;
+          margin: 0 auto;
+     }
+
+          .quantity-controls .btn {
+               width: 35px;
+               height: 35px;
+               padding: 0;
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               border-radius: 4px;
+          }
+
+          .quantity-controls .form-control {
+               height: 35px;
+               font-weight: bold;
+               border-left: 0;
+               border-right: 0;
+               background-color: #f8f9fa;
+          }
+
+          .quantity-controls .btn:hover:not(:disabled) {
+               transform: scale(1.05);
+               transition: transform 0.1s ease;
+          }
+
+          .quantity-controls .btn:disabled {
+               opacity: 0.6;
+               cursor: not-allowed;
+          }
+
+     .loading {
+          opacity: 0.6;
+          pointer-events: none;
+     }
+
+     .table tr {
+          transition: background-color 0.2s ease;
+     }
+
+     .update-success {
+          background-color: #d4edda !important;
+          transition: background-color 0.3s ease;
+     }
+
+     /* Animație pentru notificări */
+     @@keyframes slideInRight {
+          from {
+               transform: translateX(100%);
+               opacity: 0;
+          }
+
+          to {
+               transform: translateX(0);
+               opacity: 1;
+          }
+     }
+
+     .custom-toast {
+          animation: slideInRight 0.3s ease-out;
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background-color: #343a40; /* Culoare de fundal implicită */
+          color: white;
+          padding: 15px 20px;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+          z-index: 9999;
+          font-weight: 500;
+          min-width: 300px;
+          display: none; /* Ascuns inițial */
+     }
+
+          .custom-toast.success {
+               background-color: #28a745;
+          }
+
+          .custom-toast.error {
+               background-color: #dc3545;
+          }
+</style>
+
+@section scripts {
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <script type="text/javascript">
+        $(document).ready(function () {
+
+            // Funcție pentru afișarea notificărilor toast personalizate
+            function showCustomToast(message, type = 'success') {
+                // Elimină orice toast existent pentru a afișa doar unul la un moment dat
+                $('.custom-toast').remove();
+
+                var icon = type === 'success' ? '✓' : '✗';
+                var toast = $('<div class="custom-toast ' + type + '">' +
+                    '<span style="font-size: 18px; margin-right: 10px;">' + icon + '</span>' +
+                    message +
+                    '</div>');
+
+                $('body').append(toast);
+                toast.fadeIn(300); // Face toast-ul vizibil cu o animație
+
+                setTimeout(function () {
+                    toast.fadeOut(300, function () {
+                        $(this).remove(); // Elimină toast-ul după animația de fadeOut
+                    });
+                }, 4000); // Notificarea dispare după 4 secunde
+            }
+
+
+            // Funcție pentru actualizarea totalului general (din DOM)
+            function updateGrandTotalDisplay() {
+                let grandTotal = 0;
+                // Iterează prin toate totalurile individuale ale produselor
+                $('.item-total-price').each(function () {
+                    let priceText = $(this).text();
+                    // Extrage doar numărul, ignorând simbolul valutar și formatarea
+                    let numericPrice = parseFloat(priceText.replace(/[^\d.,-]/g, '').replace(',', '.'));
+                    if (!isNaN(numericPrice)) {
+                        grandTotal += numericPrice;
+                    }
+                });
+                // Formatează și afișează totalul general
+                $('#grand-total-display').text(formatPrice(grandTotal));
+                // Actualizează starea butonului de plasare comandă
+                updatePlaceOrderButtonState();
+            }
+
+            // Funcție pentru a activa/dezactiva butonul de plasare comandă
+            function updatePlaceOrderButtonState() {
+                // Verifică dacă există rânduri de produse în tabel (fără rânduri de antet/subsol)
+                var isCartEmpty = $('#cart-table tbody tr').length === 0;
+                $('#place-order-form button[type="submit"]').prop('disabled', isCartEmpty);
+            }
+
+            // Funcție pentru formatarea prețului în lei
+            function formatPrice(price) {
+                // Utilizează Intl.NumberFormat pentru o formatare corectă, inclusiv simbolul valutar
+                // 'ro-RO' pentru limba română, 'MDL' pentru Leu Moldovenesc
+                return new Intl.NumberFormat('ro-RO', {
+                    style: 'currency',
+                    currency: 'MDL'
+                }).format(price);
+            }
+
+            // Funcția principală pentru a actualiza cantitatea și gestiona eliminarea
+            function updateCartItem(productId, newQuantity, triggerButton) {
+                const row = $(`tr[data-product-id="${productId}"]`);
+                const quantityInput = row.find('.quantity-input');
+
+                // Adaugă stare de "loading" vizuală
+                row.addClass('loading');
+                if (triggerButton) { // Dezactivează butonul care a declanșat acțiunea
+                    triggerButton.prop('disabled', true);
+                }
+                quantityInput.prop('disabled', true); // Dezactivează input-ul de cantitate
+
+                $.ajax({
+                    url: '@Url.Action("UpdateCartItemQuantity", "Cart")',
+                    type: 'POST',
+                    data: { productId: productId, quantity: newQuantity },
+                    success: function (response) {
+                        row.removeClass('loading'); // Elimină starea de loading
+                        if (triggerButton) {
+                            triggerButton.prop('disabled', false); // Reactivează butonul
+                        }
+                        quantityInput.prop('disabled', false); // Reactivează input-ul de cantitate
+
+                        if (response.success) {
+                            showCustomToast(response.message, 'success'); // Afișează notificare de succes
+                            if (response.isRemoved) {
+                                // Animație și eliminare rând
+                                row.fadeOut(300, function () {
+                                    $(this).remove();
+                                    updateGrandTotalDisplay(); // Recalculează totalul general
+                                    // Dacă coșul este gol, reîmprospătează pagina pentru a afișa mesajul "gol"
+                                    if ($('#cart-table tbody tr').length === 0) {
+                                        location.reload();
+                                    }
+                                });
+                            } else {
+                                // Actualizează valorile în interfață
+                                quantityInput.val(response.newQuantity);
+                                row.find('.item-total-price').text(response.newItemTotal);
+                                updateGrandTotalDisplay(); // Recalculează totalul general
+
+                                // Ajustează starea butonului '-' dacă cantitatea este 1
+                                row.find('.quantity-minus').prop('disabled', response.newQuantity <= 1);
+                                // Ajustează starea butonului '+' dacă cantitatea este 99
+                                row.find('.quantity-plus').prop('disabled', response.newQuantity >= 99);
+
+                                row.addClass('update-success'); // Efect vizual de succes
+                                setTimeout(function () {
+                                    row.removeClass('update-success');
+                                }, 1000);
+                            }
+                        } else {
+                            showCustomToast(response.message, 'error'); // Afișează notificare de eroare
+                            // Reverifică starea butoanelor și input-ului în caz de eroare
+                            row.removeClass('loading');
+                            if (triggerButton) {
+                                triggerButton.prop('disabled', false);
+                            }
+                            quantityInput.prop('disabled', false);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        row.removeClass('loading');
+                        if (triggerButton) {
+                            triggerButton.prop('disabled', false);
+                        }
+                        quantityInput.prop('disabled', false);
+                        showCustomToast('Eroare la comunicarea cu serverul!', 'error');
+                        console.error("AJAX Error: ", status, error, xhr);
+                    }
+                });
+            }
+
+            // --- Event Handlers ---
+
+            // Click pe butonul '+'
+            $(document).on('click', '.quantity-plus', function () {
+                const productId = $(this).data('product-id');
+                const quantityInput = $(this).closest('.quantity-controls').find('.quantity-input');
+                let currentQuantity = parseInt(quantityInput.val()) || 0; // Asigură-te că e număr
+                const newQuantity = currentQuantity + 1;
+
+                if (newQuantity <= 99) {
+                    updateCartItem(productId, newQuantity, $(this));
+                } else {
+                    showCustomToast('Cantitatea maximă permisă este 99.', 'error');
+                    $(this).prop('disabled', true); // Dezactivează butonul '+'
+                }
+            });
+
+            // Click pe butonul '-'
+            $(document).on('click', '.quantity-minus', function () {
+                const productId = $(this).data('product-id');
+                const quantityInput = $(this).closest('.quantity-controls').find('.quantity-input');
+                let currentQuantity = parseInt(quantityInput.val()) || 0; // Asigură-te că e număr
+                const newQuantity = currentQuantity - 1;
+
+                if (newQuantity >= 1) {
+                    updateCartItem(productId, newQuantity, $(this));
+                } else {
+                    // Dacă newQuantity este 0, confirmă ștergerea
+                    const productName = $(this).closest('tr').find('strong').text();
+                    if (confirm(`Ești sigur că vrei să ștergi "${productName}" din coș?`)) {
+                        updateCartItem(productId, 0, $(this)); // Apelează cu 0 pentru eliminare
+                    } else {
+                        // Dacă utilizatorul anulează ștergerea, reactivează butonul '-'
+                        $(this).prop('disabled', false);
+                    }
+                }
+            });
+
+            // Click pe butonul de ștergere (coș de gunoi)
+            $(document).on('click', '.remove-item', function () {
+                const productId = $(this).data('product-id');
+                const productName = $(this).closest('tr').find('strong').text();
+                if (confirm(`Ești sigur că vrei să ștergi "${productName}" din coș?`)) {
+                    updateCartItem(productId, 0, $(this)); // Setează cantitatea la 0 pentru a-l elimina
+                }
+            });
+
+            // Submit formular "Plasează Comanda"
+            $('#place-order-form').submit(function (e) {
+                e.preventDefault(); // Oprește trimiterea tradițională a formularului
+
+                const submitBtn = $(this).find('button[type="submit"]');
+                const originalHtml = submitBtn.html(); // Salvează conținutul original al butonului
+
+                submitBtn.prop('disabled', true); // Dezactivează butonul
+                submitBtn.html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Se procesează...'); // Afișează spinner
+
+                $.ajax({
+                    url: $(this).attr('action'), // Ia URL-ul din atributul 'action' al formularului
+                    type: 'POST',
+                    success: function (response) {
+                        if (response.success) {
+                            showCustomToast('Comanda a fost plasată cu succes!', 'success');
+                            // După o scurtă întârziere, redirecționează către pagina de mulțumire
+                            setTimeout(function () {
+                                window.location.href = response.redirectUrl || '/Cart/ThankYou';
+                            }, 2000);
+                        } else {
+                            showCustomToast(response.message, 'error'); // Afișează mesajul de eroare
+                            // Dacă există un URL de redirecționare (ex: pentru login), redirecționează
+                            if (response.redirectUrl) {
+                                setTimeout(function () {
+                                    window.location.href = response.redirectUrl;
+                                }, 2000);
+                            }
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        showCustomToast('Eroare la plasarea comenzii!', 'error');
+                        console.error("AJAX Error: ", status, error, xhr);
+                    },
+                    complete: function () {
+                        // Reactivăm butonul și îi redăm conținutul original, indiferent de succes sau eroare
+                        submitBtn.prop('disabled', false);
+                        submitBtn.html(originalHtml);
+                    }
+                });
+            });
+
+            // Prevenim modificarea directă a input-ului de cantitate (readonly)
+            $(document).on('keydown', '.quantity-input', function (e) {
+                e.preventDefault();
+                return false;
+            });
+
+            // Apel inițial pentru a seta starea butonului de plasare comandă la încărcarea paginii
+            updatePlaceOrderButtonState();
+            // Asigură-te că butoanele minus sunt disabled dacă Quantity <= 1 la încărcarea paginii
+            $('.quantity-input').each(function() {
+                var currentQuantity = parseInt($(this).val());
+                $(this).closest('.quantity-controls').find('.quantity-minus').prop('disabled', currentQuantity <= 1);
+            });
+        });
+     </script>
+}

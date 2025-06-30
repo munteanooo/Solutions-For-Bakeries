@@ -13,9 +13,11 @@ namespace eUseControl.Web
     {
         void Application_Start(object sender, EventArgs e)
         {
-            // Code that runs on application startup
            AreaRegistration.RegisterAllAreas();
            RouteConfig.RegisterRoutes(RouteTable.Routes);
-        }
-    }
+
+               var ensureDLLIsCopied = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
+
+          }
+     }
 }
