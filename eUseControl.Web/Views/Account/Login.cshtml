@@ -9,25 +9,20 @@
                     <div class="card-body">
                          <h2 class="card-title text-center mb-4">Autentificare</h2>
 
-                         <!-- NOU: Adăugăm un rând și o coloană aici pentru a centra conținutul formularului în card -->
                          <div class="row justify-content-center">
                               <div class="col-12 col-sm-10 col-md-10">
-                                   <!-- Se centrează conținutul formularului în 10 coloane pe md și 12 pe sm/xs -->
                                    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
                                    {
-                                        @* Câmp pentru Nume Utilizator *@
                                         <div class="form-group mb-3">
                                              <label for="username" class="form-label">Nume Utilizator</label>
                                              <input type="text" class="form-control" id="username" name="username" placeholder="Introduceți numele de utilizator" required />
                                         </div>
 
-                                        @* Câmp pentru Parolă *@
                                         <div class="form-group mb-4">
                                              <label for="password" class="form-label">Parolă</label>
                                              <input type="password" class="form-control" id="password" name="password" placeholder="Introduceți parola" required />
                                         </div>
 
-                                        @* Buton de Login *@
                                         <div class="d-grid gap-2">
                                              <button type="submit" class="btn btn-primary btn-lg">Autentificare</button>
                                         </div>
